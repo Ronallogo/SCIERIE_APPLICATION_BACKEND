@@ -1,4 +1,2 @@
-package com.scierie_application.scierie.colis;
-
-public interface Colis {
+package com.scierie_application.scierie.colis;public class Colis {
 }
