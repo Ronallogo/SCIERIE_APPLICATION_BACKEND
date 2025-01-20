@@ -1,0 +1,50 @@
+package com.scierie_application.scierie.pays;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
+
+
+@RestController
+@RequestMapping(value = "/api/auth/scierie/pays")
+@CrossOrigin("*")
+public class PaysController {
+    @Autowired
+    private PaysService paysService;
+
+
+
+
+    @PostMapping(value = "/create" , produces = "application/json" , consumes = "application/json")
+    public Pays create(@RequestBody Pays p) {
+        return this.paysService.createPays(p);
+    }
+
+
+    @PutMapping("/edit")
+    public Pays edit(@RequestBody Pays entity) {
+        return this.paysService.updatePays(entity);
+        
+    }
+    @GetMapping("/all")
+    public List<Pays> getAllPays() {
+        return this.paysService.findAllPays();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public boolean delete(@RequestParam Long id) {
+        return this.paysService.deletePays(id);
+    }    
+
+}
