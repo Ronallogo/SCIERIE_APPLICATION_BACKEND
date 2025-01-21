@@ -26,4 +26,9 @@ public class Pays {
 
     public Pays(String nom_pays){this.nom_pays = nom_pays;}
 
+    public Pays(Long id_pays , String nom_pays){
+        this.id_pays = id_pays ;
+        this.nom_pays = nom_pays ;
+    }
+
 }

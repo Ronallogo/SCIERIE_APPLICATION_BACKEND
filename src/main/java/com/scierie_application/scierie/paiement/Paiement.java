@@ -29,7 +29,7 @@ public class Paiement implements Serializable {
     @JoinColumn(name = "id_client" , nullable = false)
     private Client client ;
     @ManyToOne
-    @JoinColumn(name = "id_paiement" , nullable = false)
+    @JoinColumn(name = "id_type_paiement" , nullable = false)
     private TypePaiement type_paiement ;
     @ManyToOne
     @JoinColumn(name = "id_tarif" , nullable = false)
@@ -41,8 +41,12 @@ public class Paiement implements Serializable {
             pattern = "yyyy-MM-dd",
             timezone = "UTC")
     private Date date_cloture ;
+
+
     @OneToMany(mappedBy = "paiement" , cascade = CascadeType.ALL)
+
     private List<Colis> listColis ;
+
     @OneToMany(mappedBy = "paiement" , cascade = CascadeType.ALL)
     private List<Facture> factures ;
 }

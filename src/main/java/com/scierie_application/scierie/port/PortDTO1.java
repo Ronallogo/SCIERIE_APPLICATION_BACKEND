@@ -14,10 +14,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PortDTO1 {
-    
+
     private Long id_port ;
     private String nom_port ;
-    private Long ville ;
+    private Long id_ville ;
+    private String ville ;
 
 
 }

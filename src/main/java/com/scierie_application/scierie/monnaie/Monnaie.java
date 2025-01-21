@@ -1,6 +1,6 @@
 package com.scierie_application.scierie.monnaie;
 
-import com.scierie_application.scierie.paiement.Paiement;
+import com.scierie_application.scierie.contrat.Contrat;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @Entity
 @Table(name = "Monnaie" )
 
@@ -23,13 +24,19 @@ public class Monnaie implements Serializable {
     private String abbreviation ;
     private String nom_monnaie ;
     @OneToMany(mappedBy = "monnaie" , cascade = CascadeType.ALL)
-    private List<Paiement> paiements ;
+    private List<Contrat> contrats ;
 
 
 
     Monnaie(String nom ,String abbreviation){
         this.nom_monnaie = nom ;
         this.abbreviation = abbreviation ;
+    }
+
+    Monnaie(Long id ,   String nom ,String abbreviation){
+        this.nom_monnaie = nom ;
+        this.abbreviation = abbreviation ;
+        this.id_monnaie = id ;
     }
 
 }

@@ -1,17 +1,11 @@
-package com.EmployeeManagment.Source.ApplicationControllerAdvice;
+package com.scierie_application.scierie.handler;
 
 
-import com.EmployeeManagment.Source.Absences.Exception.AbsenceNotFoundException;
-import com.EmployeeManagment.Source.Content.Exception.ContentNotFoundException;
-import com.EmployeeManagment.Source.Pay_Stub.Exception.PayStubNotFoundException;
-import com.EmployeeManagment.Source.Task.Exception.TaskNotFoundException;
-import com.EmployeeManagment.Source.Task_Inserted.Exception.TaskInsertedNotFoundException;
-import com.EmployeeManagment.Source.Task_Scheduled.Exception.TaskScheduledNotFoundException;
-import com.EmployeeManagment.Source.TimeOff.Exception.TimeOffNotFoundException;
-import com.EmployeeManagment.Source.Employee.Exception.EmployeeNotFoundException;
-import com.EmployeeManagment.Source.Position.Exception.PositionNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
+
+import com.scierie_application.scierie.handler.exeption.EssenceNotFound;
+import com.scierie_application.scierie.handler.exeption.MonnaieNotFoundException;
+import com.scierie_application.scierie.handler.exeption.PortNotFoundException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -23,7 +17,7 @@ import org.springframework.web.context.request.WebRequest;
 @ControllerAdvice
 public class GlobalExceptionHandler {
     /////endpoint exception for employee not found
-    @ExceptionHandler(EmployeeNotFoundException.class)
+  /*  @ExceptionHandler(EmployeeNotFoundException.class)
     public ResponseEntity<?> handleEmployeeNotFoundException(EmployeeNotFoundException ex, WebRequest request) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
@@ -88,10 +82,7 @@ public class GlobalExceptionHandler {
 
 
     /////endpoint for entity not found
-    @ExceptionHandler(EntityNotFoundException.class )
-    public ResponseEntity<?> handleEntityNotFoundException(Exception ex, WebRequest request) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+  
 
 
     //////endpoints for unique taskInserted
@@ -99,13 +90,27 @@ public class GlobalExceptionHandler {
 
 
 
-    ////endpoint exception for others exception
+    
+*/
+    @ExceptionHandler(EssenceNotFound.class)
+    public ResponseEntity<?> handleEssenceNotFoundException(EssenceNotFound ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+
+    @ExceptionHandler(MonnaieNotFoundException.class)
+    public ResponseEntity<?> handleAbsenceNotFoundException(MonnaieNotFoundException ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleGlobalException(Exception ex, WebRequest request) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-
+    @ExceptionHandler(PortNotFoundException.class )
+    public ResponseEntity<?> handlePortNotFoundException(PortNotFoundException ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
 
 }

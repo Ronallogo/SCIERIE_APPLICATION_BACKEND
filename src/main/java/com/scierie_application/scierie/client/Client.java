@@ -1,10 +1,13 @@
 package com.scierie_application.scierie.client;
 
+import com.scierie_application.scierie.contrat.Contrat;
+import com.scierie_application.scierie.paiement.Paiement;
 import com.scierie_application.scierie.societe.Societe;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 @Data
@@ -23,6 +26,10 @@ public class Client implements Serializable {
     private String adresse ;
     private String email ;
     private String fax ;
+    @OneToMany(mappedBy = "client"  , cascade = CascadeType.ALL)
+    private List<Contrat> contrats ;
+    @OneToMany(mappedBy = "client"  , cascade = CascadeType.ALL)
+    private List<Paiement> paiements ;
 
     public Client(
         Societe societe ,
