@@ -3,8 +3,7 @@ package com.scierie_application.scierie.contrat;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.scierie_application.scierie.client.Client;
-import com.scierie_application.scierie.monnaie.Monnaie;
+ 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

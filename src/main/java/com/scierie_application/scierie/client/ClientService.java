@@ -65,6 +65,7 @@ public class ClientService {
             .email(client.getEmail())
             .fax(client.getFax())
             .id_societe(client.getSociete().getId_societe())
+            .societe(client.getSociete().getNom_societe())
             .build()).collect(Collectors.toList());
     }
 

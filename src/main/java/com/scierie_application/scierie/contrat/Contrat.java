@@ -10,6 +10,7 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 
 @Data
@@ -41,6 +42,10 @@ public class Contrat implements Serializable {
     @OneToMany(mappedBy = "contrat" , cascade = CascadeType.ALL)
     private List<Paiement> paiements ;
 
+
+    public  static String generateUUID() {
+		return UUID.randomUUID().toString();
+	}
 
 
 }

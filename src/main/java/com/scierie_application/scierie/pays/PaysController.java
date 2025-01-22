@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -43,7 +44,7 @@ public class PaysController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public boolean delete(@RequestParam Long id) {
+    public boolean delete(@PathVariable Long id) {
         return this.paysService.deletePays(id);
     }    
 
