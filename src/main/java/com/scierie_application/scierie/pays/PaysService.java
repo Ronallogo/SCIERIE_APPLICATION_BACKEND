@@ -1,6 +1,7 @@
 package com.scierie_application.scierie.pays;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,17 +19,30 @@ public class PaysService {
 
     
 
-    public Pays createPays(Pays pays){
-        return paysRepository.save(pays);
+    public PaysDTO1 createPays(PaysDTO1 pays){
+        paysRepository.save(Pays.builder()
+            .id_pays(pays.getId_pays())
+            .nom_pays(pays.getNom_pays())
+            .build());
+        
+        return pays;
     }
  
 
-    public List<Pays> findAllPays(){
-        return paysRepository.findAll();
+    public List<PaysDTO1> findAllPays(){
+        return paysRepository.findAll().stream().map( x -> PaysDTO1.builder()
+            .id_pays(x.getId_pays())
+            .nom_pays(x.getNom_pays())
+            .build())
+            .collect(Collectors.toList());
     }
 
-    public Pays updatePays(Pays pays){
-        return paysRepository.save(pays);
+    public PaysDTO1 updatePays(PaysDTO1 pays){
+        paysRepository.save(Pays.builder()
+            .id_pays(pays.getId_pays())
+            .nom_pays(pays.getNom_pays())
+            .build());
+        return pays;
     }
 
     public boolean deletePays(Long id){

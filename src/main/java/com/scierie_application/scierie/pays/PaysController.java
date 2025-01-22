@@ -27,18 +27,18 @@ public class PaysController {
 
 
     @PostMapping(value = "/create" , produces = "application/json" , consumes = "application/json")
-    public Pays create(@RequestBody Pays p) {
+    public PaysDTO1 create(@RequestBody PaysDTO1 p) {
         return this.paysService.createPays(p);
     }
 
 
     @PutMapping("/edit")
-    public Pays edit(@RequestBody Pays entity) {
+    public PaysDTO1 edit(@RequestBody PaysDTO1 entity) {
         return this.paysService.updatePays(entity);
         
     }
     @GetMapping("/all")
-    public List<Pays> getAllPays() {
+    public List<PaysDTO1> getAllPays() {
         return this.paysService.findAllPays();
     }
 
