@@ -23,29 +23,30 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class GrumeController {
 
     @Autowired
-    private GrumeService grumeService;
+    private GrumeService gs;
 
     @PostMapping(value = "/create", produces = "application/json" , consumes = "application/json")
     public GrumeDTO1 create(@RequestBody GrumeDTO1 entity) {
-        //TODO: process POST request
-        return this.grumeService.create(entity);
+       
+        return this.gs.create(entity);
     }
 
     @GetMapping(value = "/all")
     public List<GrumeDTO1> getAllGrume() {
-        return  this.grumeService.getAllGrume();
+        return  this.gs.getAllGrume();
     }
 
     @PutMapping("/edit")
     public GrumeDTO1 putMethodName( @RequestBody GrumeDTO1 entity) {
-        //TODO: process PUT request
-        return this.grumeService.edit(entity);
+ 
+        return this.gs.edit(entity);
        
     }
 
+    
     @DeleteMapping("/delete/{id}")
     public boolean delete(@PathVariable Long id) {
-        return this.grumeService.delete(id);
+        return this.gs.delete(id);
     }
     
     

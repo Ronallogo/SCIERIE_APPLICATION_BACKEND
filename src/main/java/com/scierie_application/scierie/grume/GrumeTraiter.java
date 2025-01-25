@@ -1,14 +1,12 @@
-package com.scierie_application.scierie.ravitaillement;
+package com.scierie_application.scierie.grume;
 
- 
 import java.io.Serializable;
 import java.sql.Date;
 
-import org.hibernate.annotations.ManyToAny;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.scierie_application.scierie.fournisseur.Fournisseur;
+import com.scierie_application.scierie.traitement.Traitement;
 
+ 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,27 +21,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Builder
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Getter
+@Setter
 @Entity
-@Table(name = "Ravitaillement")
-@Data
-public class Ravitaillement  implements Serializable {
+@Table(name = "Grume_Traiter" )
+public class GrumeTraiter  implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
-    private Long id_rav ; 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id_operation ; 
+    private String code_grume;
     @ManyToOne
-    @JoinColumn(name = "id_fournisseur" , nullable = false)
-    private Fournisseur  fournisseur  ; 
-    private String code_rav ; 
-    @JsonFormat(shape = JsonFormat.Shape.STRING,
+    @JoinColumn(name = "id_traitement" , nullable = false)
+    private Traitement traitement;
+     @JsonFormat(shape = JsonFormat.Shape.STRING,
             pattern = "yyyy-MM-dd",
             timezone = "UTC")
-    private Date date_rav ;
-    private Float prix_rav ; 
-
-
-} 
+    private Date date_traitement;
+}

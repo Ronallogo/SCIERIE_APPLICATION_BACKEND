@@ -1,12 +1,18 @@
 package com.scierie_application.scierie.traitement;
 
 import java.io.Serializable;
+import java.util.List;
 
+import com.scierie_application.scierie.grume.GrumeTraiter;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+ 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,7 +40,11 @@ public class Traitement  implements Serializable{
     private Float pourcent_reduction_long ;
     private Float pourcent_reduction_diam ;
     private Float pourcent_reduction_poids ;
-    private Float pourcent_reduction_cubage ; 
+    private Float pourcent_reduction_cubage ;   
+
+    @OneToMany(mappedBy = "traitement" , cascade = CascadeType.ALL)
+    private List<GrumeTraiter> listGrumeTraiter ; 
+    
 
 
 }

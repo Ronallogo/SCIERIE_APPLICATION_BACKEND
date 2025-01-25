@@ -20,9 +20,25 @@ public class GrumeService {
 
     @Autowired
     private GrumeRepository gr;
+
     @Autowired
     private EssenceRepository er ; 
 
+    @Autowired
+    private GrumeTraiteRepository gtr ; 
+
+    
+    public GrumeTraiterDTO1 create_gt(GrumeTraiterDTO1 g){
+        var e = this.gr.findByCodeLots(g.getCode_grume()).orElseThrow(()-> new GrumeNotFoundException("Grume not found"));
+        this.gtr.save(
+            GrumeTraiter.builder()
+            .code_grume(e.getCode_lots())
+            .date_traitement(g.getDate_traitement())
+            .build()
+        );
+        return g ;
+
+    }
 
     public GrumeDTO1 create(GrumeDTO1 g){
 
