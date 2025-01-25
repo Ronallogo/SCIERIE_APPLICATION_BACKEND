@@ -1,7 +1,6 @@
 package com.scierie_application.scierie.tarif;
 
 import com.scierie_application.scierie.essence.Essence;
-import com.scierie_application.scierie.fournisseur.Fournisseur;
 import com.scierie_application.scierie.paiement.Paiement;
 import jakarta.persistence.*;
 import lombok.*;

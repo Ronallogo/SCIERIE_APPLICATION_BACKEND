@@ -37,7 +37,13 @@ public class ClientService {
             .fax(client.getFax())
             .societe(societe.get())
             .build());
-        return client;
+        return ClientDTO1.builder()
+            .id_client(client.getId_client())
+            .adresse(client.getAdresse())
+            .email(client.getEmail())
+            .fax(client.getFax())
+            .id_societe(client.getId_societe())
+            .build();
     }
 
 
@@ -58,14 +64,13 @@ public class ClientService {
         return client;
     }   
 
-    public List<ClientDTO1> getAllClient(){
-        return this.repositoryClient.findAll().stream().map(client -> ClientDTO1.builder()
-            .id_client(client.getId_client())
-            .adresse(client.getAdresse())
-            .email(client.getEmail())
-            .fax(client.getFax())
-            .id_societe(client.getSociete().getId_societe())
-            .societe(client.getSociete().getNom_societe())
+  public List<ClientDTO1> getAllClient(){
+        return this.repositoryClient.findAll().stream().map(s -> ClientDTO1.builder()
+            .id_client(s.getId_client())
+            .adresse(s.getAdresse())
+            .email(s.getEmail())
+            .fax(s.getFax())
+            .id_societe(s.getSociete().getId_societe())
             .build()).collect(Collectors.toList());
     }
 

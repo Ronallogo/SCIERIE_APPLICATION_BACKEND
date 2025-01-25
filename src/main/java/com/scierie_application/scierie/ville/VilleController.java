@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/auth/scierie/ville")
+@RequestMapping("/api/a uth/scierie/ville")
 public class VilleController {
     @Autowired
     private  VilleService villeService;

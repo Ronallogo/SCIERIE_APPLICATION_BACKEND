@@ -43,9 +43,9 @@ public class Contrat implements Serializable {
     private List<Paiement> paiements ;
 
 
-    public  static String generateUUID() {
-		return UUID.randomUUID().toString();
-	}
+        public  static String generateUUID() {
+                return UUID.randomUUID().toString();
+        }
 
 
 }

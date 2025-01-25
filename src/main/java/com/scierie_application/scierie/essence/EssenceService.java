@@ -1,7 +1,7 @@
 package com.scierie_application.scierie.essence;
 
 
-import com.scierie_application.scierie.handler.exeption.EssenceNotFound;
+import com.scierie_application.scierie.handler.exeption.EssenceNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,7 +47,7 @@ public class EssenceService {
     }
 
     public EssenceDTO1 edit(EssenceDTO1 e){
-        if(!this.essenceRepository.existsById(e.getId_essence()))  throw new EssenceNotFound("essence not found") ;
+        if(!this.essenceRepository.existsById(e.getId_essence()))  throw new EssenceNotFoundException("essence not found") ;
         this.essenceRepository.save(
             new Essence(
                 e.getId_essence() ,
