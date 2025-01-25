@@ -34,10 +34,31 @@ public class GrumeService {
             GrumeTraiter.builder()
             .code_grume(e.getCode_lots())
             .date_traitement(g.getDate_traitement())
+
             .build()
         );
         return g ;
 
+    }
+
+    public List<GrumeTraiterDTO1> getAllGrumeTraiter(){
+        return this.gtr.findAll().stream().map(
+            x ->
+            GrumeTraiterDTO1.builder()
+            .id_operation( x.getId_operation())
+            .code_grume( x.getCode_grume())
+            .date_traitement( x.getDate_traitement())
+            .bois_associe( x.getTraitement().getBois_a_traiter())
+            .id_traitement( x.getTraitement().getId_traitement())
+            .nom_traitement( x.getTraitement().getNom_traitement())
+            .build()
+
+        ).collect(Collectors.toList());
+    } 
+
+    public boolean deleteGtr(Long id_gtr){
+        this.gtr.deleteById(id_gtr);
+        return !this.gtr.existsById(id_gtr);
     }
 
     public GrumeDTO1 create(GrumeDTO1 g){

@@ -24,6 +24,7 @@ public class GrumeController {
 
     @Autowired
     private GrumeService gs;
+ 
 
     @PostMapping(value = "/create", produces = "application/json" , consumes = "application/json")
     public GrumeDTO1 create(@RequestBody GrumeDTO1 entity) {
@@ -31,6 +32,19 @@ public class GrumeController {
         return this.gs.create(entity);
     }
 
+
+    @PostMapping(value = "/gtr/create", produces = "application/json" , consumes = "application/json")
+    public GrumeTraiterDTO1 createGtr(@RequestBody GrumeTraiterDTO1 entity) {
+        return this.gs.create_gt(entity);
+    }
+
+
+    @GetMapping(value = "/gtr/all")
+    public List<GrumeTraiterDTO1> getAllGrumeGtr() {
+        return  this.gs.getAllGrumeTraiter();
+    }
+
+    
     @GetMapping(value = "/all")
     public List<GrumeDTO1> getAllGrume() {
         return  this.gs.getAllGrume();

@@ -1,6 +1,7 @@
 package com.scierie_application.scierie.ville;
 
 
+import com.scierie_application.scierie.fournisseur.Fournisseur;
 import com.scierie_application.scierie.pays.Pays;
 import com.scierie_application.scierie.port.Port;
 import jakarta.persistence.*;
@@ -27,7 +28,9 @@ public class Ville implements Serializable {
     private Pays pays ;
     @OneToMany(mappedBy = "ville" , cascade = CascadeType.ALL)
     private List<Port> ports ;
-    public Ville(String ville , Pays pays){this.nom_ville = ville  ; this.pays = pays ;}
+    @OneToMany(mappedBy = "ville" , cascade = CascadeType.ALL)
+    private List<Fournisseur> fournisseurs ; 
+ 
 
 
 
