@@ -5,7 +5,8 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.scierie_application.scierie.essence.Essence;
- 
+import com.scierie_application.scierie.ravitaillement.Ravitaillement;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,7 +37,8 @@ public class Grume implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id_grume ;
-    private String code_lots ;
+    @ManyToOne
+    private Ravitaillement code_rav ;
     private String localisaton ;
     private Float longueur_moy ;
     private Float diam_moy ;

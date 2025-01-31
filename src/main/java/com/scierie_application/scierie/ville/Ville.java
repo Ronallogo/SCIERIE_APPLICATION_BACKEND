@@ -23,8 +23,8 @@ public class Ville implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_ville ;
     private String nom_ville ;
-    @JoinColumn(name = "id_pays" , nullable = false)
     @ManyToOne
+    @JoinColumn(name = "id_pays" , nullable = false)
     private Pays pays ;
     @OneToMany(mappedBy = "ville" , cascade = CascadeType.ALL)
     private List<Port> ports ;

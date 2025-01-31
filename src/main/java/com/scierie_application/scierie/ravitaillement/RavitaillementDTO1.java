@@ -1,6 +1,6 @@
 package com.scierie_application.scierie.ravitaillement;
 
-import java.sql.Date;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
  

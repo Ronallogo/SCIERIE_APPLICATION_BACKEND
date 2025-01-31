@@ -21,6 +21,7 @@ public class Pays {
     private Long id_pays ;
     @NonNull
     private String nom_pays ;
+     
     @OneToMany(mappedBy = "pays" ,cascade = CascadeType.ALL)
     private List<Ville> villes;
 

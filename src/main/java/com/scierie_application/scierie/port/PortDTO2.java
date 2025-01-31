@@ -1,6 +1,6 @@
 package com.scierie_application.scierie.port;
- 
-import com.scierie_application.scierie.ville.VilleDTO1;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,11 +15,17 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PortDTO1 {
+public class PortDTO2 {
 
     private Long id_port ;
     private String nom_port ;
-    private VilleDTO1 ville ;
-
+    @JsonProperty("id_ville")
+    private Long id_ville ;
+    @JsonProperty("nom_ville")
+    private String nom_ville ;
+    @JsonProperty("id_pays")
+    private Long id_pays ;
+    @JsonProperty("nom_pays")
+    private String nom_pays ;
 
 }

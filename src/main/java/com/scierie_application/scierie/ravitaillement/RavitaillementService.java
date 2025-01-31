@@ -61,12 +61,11 @@ public class RavitaillementService {
 
     public RavitaillementDTO1 edit(RavitaillementDTO1 r){
         var f = this.fr.findById(r.getId_fourniseur()).orElseThrow(()->  new FournisseurNotFoundException("Fournisseur not found"));
-        if(!this.rav.existsById(r.getId_rav()))  throw new RavitaillementNotFoundException("Ravitaillement not found!!");
+        if(!this.rav.existsById(r.getCode_rav()))  throw new RavitaillementNotFoundException("Ravitaillement not found!!");
 
         this.rav.save(
             Ravitaillement
             .builder()
-            .id_rav(r.getId_rav())
             .prix_rav(r.getPrix_rav())
             .code_rav(r.getCode_rav())
             .date_rav(r.getDate_rav())
@@ -80,7 +79,7 @@ public class RavitaillementService {
     
 
 
-    public boolean delete(Long id_rav){
+    public boolean delete(String id_rav){
         if(!this.rav.existsById(id_rav)) throw new RavitaillementNotFoundException( "Ravitaillement not found");
         this.rav.deleteById(id_rav);
         return true ; 

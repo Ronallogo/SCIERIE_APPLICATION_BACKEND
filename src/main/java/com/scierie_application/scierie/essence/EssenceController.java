@@ -6,6 +6,11 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+ 
+ 
+ 
+
 
 @RestController
 @RequestMapping(value = "/api/auth/scierie/essence")
@@ -40,4 +45,11 @@ public class EssenceController {
     public List<EssenceDTO1> search(@PathVariable String libelle){
         return this.essenceService.searchEssenceByLibelleContainDto1s(libelle);
     }
+
+    @GetMapping("/mercuriale")
+    public  Float getMethodName() {
+        return    this.essenceService.mercurialeMoyenne() ;
+    }
+    
+
 }

@@ -4,21 +4,24 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.repository.query.Param;
 
+  
 
 @EnableJpaRepositories
 public interface EssenceRepository extends JpaRepository<Essence , Long> {
 
     Optional<Essence> findByLibelle(String nom);
 
-    /**
-     * Retrieves a list of Essence entities where the libelle contains the specified string.
-     *
-     * @param nom the string to search for within the libelle field of Essence entities
-     * @return a list of Essence entities with libelle containing the specified string
-     */
-    List<Essence> findByLibelleContaining(String nom);
+    @Query(value="select * from essence e where e.libelle like CONCAT('%',:keyword,'%') or e.abbreviation like CONCAT('%',:keyword,'%')" , nativeQuery = true)
+    List<Essence> searchEssences(@Param("keyword")  String keyword);
+
+
+    @Query(value="SELECT avg(mercuriale) as mercuriale FROM essence" , nativeQuery=true)
+    Float mercurialeMoyenne();
+    
 
 
 }

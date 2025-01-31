@@ -24,7 +24,7 @@ public class PortController {
 
 
     @PostMapping(value = "/create" , produces = "application/json" , consumes = "application/json")
-    public PortDTO1 createPort(PortDTO1 port){
+    public PortDTO2 createPort(@RequestBody  PortDTO2 port){
         return this.portService.createPort(port);
 
     }
@@ -37,9 +37,13 @@ public class PortController {
 
 
     @PutMapping("/edit")
-    public PortDTO1 editPort( @RequestBody PortDTO1 entity) {
-         
+    public PortDTO2 editPort( @RequestBody PortDTO2 entity) {
         return this.portService.editPort(entity);
+    }
+
+    @GetMapping(value = "/search/{keyword}")
+    public List<PortDTO1> search(@PathVariable String keyword){
+       return this.portService.searchPort(keyword);
     }
 
 

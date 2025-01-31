@@ -50,6 +50,11 @@ public class GrumeController {
         return  this.gs.getAllGrume();
     }
 
+    @GetMapping(value = "/dataChart")
+    public List<GrumeDTO2> getDataChart() {
+        return  this.gs.dataChartStockEssence();
+    }
+
     @PutMapping("/edit")
     public GrumeDTO1 putMethodName( @RequestBody GrumeDTO1 entity) {
  
@@ -62,6 +67,7 @@ public class GrumeController {
     public boolean delete(@PathVariable Long id) {
         return this.gs.delete(id);
     }
+
     
     
 }

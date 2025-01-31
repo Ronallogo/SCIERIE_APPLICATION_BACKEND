@@ -2,9 +2,11 @@ package com.scierie_application.scierie.essence;
 
 
 import com.scierie_application.scierie.handler.exeption.EssenceNotFoundException;
+ 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +20,7 @@ public class EssenceService {
 
 
     public EssenceDTO1 create(EssenceDTO1 e) {
-        this.essenceRepository.save(
+       var essence =  this.essenceRepository.save(
                new Essence(
                 e.getId_essence() ,
                 e.getLibelle() , 
@@ -28,6 +30,7 @@ public class EssenceService {
                 e.getTeneur_en_eau()
                 ) 
             );
+        e.setId_essence( essence.getId_essence());
         return e ;
 
     }
@@ -74,7 +77,8 @@ public class EssenceService {
 
 
     public List<EssenceDTO1> searchEssenceByLibelleContainDto1s(String libelle){
-        return this.essenceRepository.findByLibelleContaining(libelle)
+        System.out.println(libelle);
+        return this.essenceRepository.searchEssences(libelle)
                 .stream().map(x-> EssenceDTO1.builder()
                         .id_essence(x.getId_essence())
                         .teneur_en_eau(x.getTeneur_en_eau())
@@ -85,5 +89,14 @@ public class EssenceService {
                         .build())
                 .collect(Collectors.toList());
     }
+
+
+    public  Float mercurialeMoyenne(){
+        return essenceRepository.mercurialeMoyenne();
+             
+    }
+
+
+    
 }
 

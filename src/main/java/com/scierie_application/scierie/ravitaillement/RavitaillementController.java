@@ -37,7 +37,7 @@ public class RavitaillementController {
     }
 
     @DeleteMapping("/delete/{id_rav}")
-    public boolean delete(@PathVariable Long id_rav){
+    public boolean delete(@PathVariable String id_rav){
         return this.service.delete(id_rav);
     }
     

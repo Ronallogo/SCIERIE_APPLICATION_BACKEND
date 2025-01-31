@@ -18,6 +18,7 @@ public class Port {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_port ;
     private String nom_port ;
-    @Column(name = "id_ville")
+    @ManyToOne
+    @JoinColumn(name = "id_ville" , nullable = true)
     private Ville ville ;
 }

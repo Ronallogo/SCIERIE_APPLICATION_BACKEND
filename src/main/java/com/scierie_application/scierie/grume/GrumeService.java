@@ -7,10 +7,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
- 
 import com.scierie_application.scierie.essence.EssenceRepository;
 import com.scierie_application.scierie.handler.exeption.EssenceNotFoundException;
 import com.scierie_application.scierie.handler.exeption.GrumeNotFoundException;
+ 
+import com.scierie_application.scierie.ravitaillement.RavitaillementRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -27,12 +28,16 @@ public class GrumeService {
     @Autowired
     private GrumeTraiteRepository gtr ; 
 
+    @Autowired
+    private RavitaillementRepository r ; 
+
+
     
     public GrumeTraiterDTO1 create_gt(GrumeTraiterDTO1 g){
         var e = this.gr.findByCodeLots(g.getCode_grume()).orElseThrow(()-> new GrumeNotFoundException("Grume not found"));
         this.gtr.save(
             GrumeTraiter.builder()
-            .code_grume(e.getCode_lots())
+            .code_grume(e.getCode_rav().getCode_rav())
             .date_traitement(g.getDate_traitement())
 
             .build()
@@ -64,15 +69,15 @@ public class GrumeService {
     public GrumeDTO1 create(GrumeDTO1 g){
 
         var e = this.er.findById(g.getId_essence()).orElseThrow(()-> new EssenceNotFoundException("Essence not found"));
+        var rav = this.r.findByCode(g.getCode_lots()).orElseThrow(()-> new RuntimeException("ravitaillement not found"));
 
-
-        String code = this.generateUUID() ;
+ 
         this.gr.save(
             Grume.builder()
             .diam_moy(g.getDiam_moy())
             .longueur_moy(g.getLongueur_moy())
             .poids_moy(g.getPoids_moy())
-            .code_lots(code)
+            .code_rav(rav)
             .cubage_moy(g.getCubage_moy())
             .qualite( g.getQualite())
             .quantite(g.getQuantite())
@@ -80,7 +85,7 @@ public class GrumeService {
             .localisaton(g.getLocalisaton())
             .build()
         );
-        g.setCode_lots(code);
+        
         return g ; 
     }
 
@@ -93,9 +98,11 @@ public class GrumeService {
         return this.gr.findAll().stream().map(x->
         GrumeDTO1.builder()
         .nom_essence(x.getEssence().getLibelle())
-        .code_lots(x.getCode_lots())
+        .code_lots(x.getCode_rav().getCode_rav())
         .cubage_moy(x.getCubage_moy())
+        .id_grume( x.getId_grume())
         .diam_moy(x.getDiam_moy())
+        .entree(x.getEntree())
         .longueur_moy(x.getLongueur_moy())
         .poids_moy(x.getPoids_moy())
         .localisaton(x.getLocalisaton())
@@ -107,17 +114,31 @@ public class GrumeService {
         
     }
 
+    
+    public List<GrumeDTO2> dataChartStockEssence(){
+        
+
+        return  this.er.findAll().stream().map(
+            x->
+                GrumeDTO2.builder()
+                .essence( x.getLibelle())
+                .qtGrume(sumAll( x.getGrumes()))
+                .build()      
+        ).collect( Collectors.toList());
+    }
+
+
     public GrumeDTO1 edit(GrumeDTO1 g){
         var e = this.er.findById(g.getId_essence()).orElseThrow(()-> new EssenceNotFoundException("Essence not found"));
         if(!this.gr.existsById(g.getId_grume()))  throw new GrumeNotFoundException("Grume not found!!");
-
+        var rav = this.r.findByCode(g.getCode_lots()).orElseThrow(()-> new RuntimeException("ravitaillement not found"));
         this.gr.save(
             Grume.builder()
             .id_grume(g.getId_grume())
             .diam_moy(g.getDiam_moy())
             .longueur_moy(g.getLongueur_moy())
             .poids_moy(g.getPoids_moy())
-            .code_lots(g.getCode_lots())
+            .code_rav(rav)
             .cubage_moy(g.getCubage_moy())
             .qualite( g.getQualite())
             .quantite(g.getQuantite())
@@ -127,6 +148,14 @@ public class GrumeService {
         );
         return g ; 
     }
+
+
+    public Integer sumAll(List<Grume> list) {
+        return list.stream()
+            .mapToInt(Grume::getQuantite)
+            .sum();
+    }
+    
 
     public boolean delete(Long id_grume){
         if(!this.gr.existsById(id_grume)) throw new GrumeNotFoundException( "Grume not found");
