@@ -26,15 +26,15 @@ public class FournisseurService {
 
 
     public FournisseurDTO1 create(FournisseurDTO1 f){
-       var v =  this.vr.findByNom_Ville(f.getNom_ville()).orElseThrow(()-> new VilleNotFoundException("ville not found"));
+       var v =  this.vr.findByNom_Ville(f.getNom_ville()).orElseThrow(()-> new VilleNotFoundException("ville not found "+f.toString() ));
 
        this.fr.save(
             Fournisseur.builder()
-            .adresse_fournisseur( f.getAdresse_fournisseur())
-            .email_fournisseur( f.getEmail_fournisseur())
-            .fax_fournisseur( f.getFax_fournisseur())
+            .adresse_fournisseur(f.getAdresse_fournisseur())
+            .email_fournisseur(f.getEmail_fournisseur())
+            .fax_fournisseur(f.getFax_fournisseur())
             .ville(v)
-            .nom_fournisseur( f.getNom_fournisseur())
+            .nom_fournisseur(f.getNom_fournisseur())
             .telephone_fournisseur(f.getTelephone_fournisseur())
             .taxe_abbatage(f.getTaxe_abbatage())
             .build()
@@ -89,6 +89,10 @@ public class FournisseurService {
         if(!this.fr.existsById(id_fournisseur)) throw new FournisseurNotFoundException( "fournisseur not found");
         this.fr.deleteById(id_fournisseur);
         return true ; 
+    }
+
+    public Float taxeMoyenneFournisseur(){
+        return  this.fr.taxeMoyenneFournisseur();
     }
 
 
