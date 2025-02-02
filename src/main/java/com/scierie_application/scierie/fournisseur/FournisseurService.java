@@ -62,6 +62,23 @@ public class FournisseurService {
     }
 
 
+    public List<FournisseurDTO1> Search(String keyword){
+        return this.fr.search(keyword).stream().map(
+            x ->
+            FournisseurDTO1.builder()
+            .id_fournisseur( x.getId_fournisseur())
+            .adresse_fournisseur( x.getAdresse_fournisseur())
+            .email_fournisseur( x.getEmail_fournisseur())
+            .fax_fournisseur( x.getFax_fournisseur())
+            .id_ville(x.getVille().getId_ville())
+            .nom_ville(x.getVille().getNom_ville())
+            .telephone_fournisseur(x.getTelephone_fournisseur())
+            .taxe_abbatage(x.getTaxe_abbatage())
+            .nom_fournisseur( x.getNom_fournisseur())
+            .build()
+        ).collect( Collectors.toList());
+    }
+
     public FournisseurDTO1 update(FournisseurDTO1 f){
         if(!this.fr.existsById(f.getId_fournisseur())) throw new FournisseurNotFoundException( "fournisseur not found");
         var v =  this.vr.findByNom_Ville(f.getNom_ville()).orElseThrow(()-> new VilleNotFoundException("ville not found"));

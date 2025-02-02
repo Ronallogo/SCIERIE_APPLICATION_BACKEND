@@ -47,6 +47,8 @@ public class Ravitaillement  implements Serializable {
     private Float prix_rav ;  
     @OneToMany(mappedBy = "code_rav" , cascade = CascadeType.ALL)
     private List<Grume> grumes ;
+    private Boolean effectuer ; 
+    private Integer qtBois ; 
 
 
 } 

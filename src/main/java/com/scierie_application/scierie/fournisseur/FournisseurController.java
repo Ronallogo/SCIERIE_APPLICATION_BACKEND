@@ -41,12 +41,18 @@ public class FournisseurController {
 
     @DeleteMapping("/delete/{id}")
     public boolean delete(@PathVariable Long id){
-        return this.delete(id);
+        return this.fs.delete(id);
     }
 
     @GetMapping("/taxe_moy")
     public Float taxeMoy(){
         return this.fs.taxeMoyenneFournisseur();
+    }
+
+
+    @GetMapping("/search/{keyword}")
+    public List<FournisseurDTO1> search(@PathVariable String keyword){
+       return  this.fs.Search(keyword);
     }
     
     

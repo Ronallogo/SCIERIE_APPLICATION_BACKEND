@@ -23,4 +23,6 @@ public class RavitaillementDTO1 {
             timezone = "UTC")
     private Date date_rav ;
     private Float prix_rav ; 
+    private Boolean effectuer ;
+    private Integer qtBois ;
 }

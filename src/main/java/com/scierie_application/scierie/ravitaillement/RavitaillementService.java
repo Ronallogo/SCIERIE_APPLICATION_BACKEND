@@ -39,6 +39,9 @@ public class RavitaillementService {
             .code_rav( code_rav)
             .date_rav(r.getDate_rav())
             .fournisseur(f)
+            .effectuer(r.getEffectuer())
+            .qtBois( r.getQtBois())
+            .effectuer(false)
             .build()
             
         );
@@ -53,6 +56,8 @@ public class RavitaillementService {
         .id_fourniseur(x.getFournisseur().getId_fournisseur())
         .nom_fournisseur(x.getFournisseur().getNom_fournisseur())
         .prix_rav(x.getPrix_rav())
+        .qtBois(x.getQtBois())
+        .effectuer( x.getEffectuer())
         .build() 
         ).collect(Collectors.toList());   
         
@@ -61,8 +66,8 @@ public class RavitaillementService {
 
     public RavitaillementDTO1 edit(RavitaillementDTO1 r){
         var f = this.fr.findById(r.getId_fourniseur()).orElseThrow(()->  new FournisseurNotFoundException("Fournisseur not found"));
-        if(!this.rav.existsById(r.getCode_rav()))  throw new RavitaillementNotFoundException("Ravitaillement not found!!");
-
+        var rav  = this.rav.findById(r.getCode_rav()).orElseThrow(()-> new RavitaillementNotFoundException("Ravitaillement not found!!"));
+        var qtBois = r.getQtBois() > rav.getQtBois() ? r.getQtBois()  : rav.getQtBois() ;
         this.rav.save(
             Ravitaillement
             .builder()
@@ -70,6 +75,9 @@ public class RavitaillementService {
             .code_rav(r.getCode_rav())
             .date_rav(r.getDate_rav())
             .fournisseur(f)
+            .effectuer(r.getEffectuer())
+            .qtBois(qtBois)
+            
             .build()
             
         );
@@ -87,7 +95,22 @@ public class RavitaillementService {
 
 
     public    String generateUUID() {
-        return UUID.randomUUID().toString();
+        return UUID.randomUUID().toString().substring(0, 10);
+    }
+
+
+    public List<RavitaillementDTO1>search(String keyword){
+        return this.rav.search(keyword).stream().map(x->
+        RavitaillementDTO1.builder()
+        .code_rav(x.getCode_rav())
+        .date_rav(x.getDate_rav())
+        .id_fourniseur(x.getFournisseur().getId_fournisseur())
+        .nom_fournisseur(x.getFournisseur().getNom_fournisseur())
+        .prix_rav(x.getPrix_rav())
+        .qtBois(x.getQtBois())
+        .effectuer( x.getEffectuer())
+        .build() 
+        ).collect(Collectors.toList());   
     }
 
 }
