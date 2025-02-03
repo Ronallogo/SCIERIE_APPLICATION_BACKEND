@@ -22,25 +22,27 @@ public class RavitaillementService {
     private RavitaillementRepository rav ;
 
     @Autowired
-    private FournisseurRepository fr ;
+    private FournisseurRepository fr ; 
     
     
     public RavitaillementDTO1 create(RavitaillementDTO1 r){
-        var f = this.fr.findById(r.getId_fourniseur()).orElseThrow(()->  new FournisseurNotFoundException("Fournisseur not found"));
+        System.out.print(r.getId_fournisseur());
+        var f = this.fr.findById(r.getId_fournisseur()).orElseThrow(()->  new FournisseurNotFoundException("Fournisseur not found"));
 
         String code_rav = this.generateUUID() ; 
 
         r.setCode_rav(code_rav);
+        if(code_rav == null) throw new RuntimeException("id null");
         
         this.rav.save(
             Ravitaillement
             .builder()
             .prix_rav(r.getPrix_rav())
-            .code_rav( code_rav)
+            .code_rav(code_rav)
             .date_rav(r.getDate_rav())
             .fournisseur(f)
             .effectuer(r.getEffectuer())
-            .qtBois( r.getQtBois())
+            .qtBois(r.getQtBois())
             .effectuer(false)
             .build()
             
@@ -53,7 +55,7 @@ public class RavitaillementService {
         RavitaillementDTO1.builder()
         .code_rav(x.getCode_rav())
         .date_rav(x.getDate_rav())
-        .id_fourniseur(x.getFournisseur().getId_fournisseur())
+        .id_fournisseur(x.getFournisseur().getId_fournisseur())
         .nom_fournisseur(x.getFournisseur().getNom_fournisseur())
         .prix_rav(x.getPrix_rav())
         .qtBois(x.getQtBois())
@@ -65,7 +67,7 @@ public class RavitaillementService {
 
 
     public RavitaillementDTO1 edit(RavitaillementDTO1 r){
-        var f = this.fr.findById(r.getId_fourniseur()).orElseThrow(()->  new FournisseurNotFoundException("Fournisseur not found"));
+        var f = this.fr.findById(r.getId_fournisseur()).orElseThrow(()->  new FournisseurNotFoundException("Fournisseur not found"));
         var rav  = this.rav.findById(r.getCode_rav()).orElseThrow(()-> new RavitaillementNotFoundException("Ravitaillement not found!!"));
         var qtBois = r.getQtBois() > rav.getQtBois() ? r.getQtBois()  : rav.getQtBois() ;
         this.rav.save(
@@ -104,7 +106,7 @@ public class RavitaillementService {
         RavitaillementDTO1.builder()
         .code_rav(x.getCode_rav())
         .date_rav(x.getDate_rav())
-        .id_fourniseur(x.getFournisseur().getId_fournisseur())
+        .id_fournisseur(x.getFournisseur().getId_fournisseur())
         .nom_fournisseur(x.getFournisseur().getNom_fournisseur())
         .prix_rav(x.getPrix_rav())
         .qtBois(x.getQtBois())

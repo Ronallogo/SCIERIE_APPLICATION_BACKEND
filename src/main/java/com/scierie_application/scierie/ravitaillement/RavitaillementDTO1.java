@@ -15,7 +15,7 @@ import lombok.*;
 @Data
 public class RavitaillementDTO1 {
     private Long id_rav ; 
-    private Long id_fourniseur ; 
+    private Long id_fournisseur ; 
     private String nom_fournisseur  ; 
     private String code_rav ; 
      @JsonFormat(shape = JsonFormat.Shape.STRING,
