@@ -54,6 +54,11 @@ public class FournisseurController {
     public List<FournisseurDTO1> search(@PathVariable String keyword){
        return  this.fs.Search(keyword);
     }
+
+    @GetMapping("/dataChart")
+    public FournisseurDTO2 getDataChart(){
+        return  this.fs.dataForChart() ;
+    }
     
     
 

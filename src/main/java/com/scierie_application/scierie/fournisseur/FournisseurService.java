@@ -113,5 +113,16 @@ public class FournisseurService {
     }
 
 
+    public FournisseurDTO2 dataForChart(){
+        List<String> list_nom = this.fr.getAllNameFournisseur() ;
+        List<Float> list_taxe = this.fr.getAllTaxeFournisseur() ;
+
+        return FournisseurDTO2.builder()
+                .nom_fournisseurs(list_nom)
+                .taxe_abbatages(list_taxe)
+                .build();
+    }
+
+
 
 }

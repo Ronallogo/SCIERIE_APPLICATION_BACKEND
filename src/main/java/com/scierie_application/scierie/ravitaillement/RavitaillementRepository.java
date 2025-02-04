@@ -3,7 +3,9 @@ package com.scierie_application.scierie.ravitaillement;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -16,7 +18,24 @@ public interface RavitaillementRepository  extends JpaRepository<Ravitaillement,
     @Query(value="select * from ravitaillement where code_rav = :code" , nativeQuery=true)
     Optional<Ravitaillement> findByCode(@Param("code") String code);
 
-    @Query(value="select r.* from ravitaillement r "+"join fournisseur f on f.id_fournisseur = r.id_fournisseur" + //
-                "where f.nom_fournisseur like concat('%' , :keyword , '%') or r.code_rav like concat('%' , :keyword , '%');"  , nativeQuery = true)
-    List<Ravitaillement>search(@Param("keyword") String keyword);
+    @Query(value = "SELECT r.* FROM ravitaillement r " +
+            "JOIN fournisseur f ON f.id_fournisseur = r.id_fournisseur " +
+            "WHERE f.nom_fournisseur LIKE CONCAT('%', :keyword, '%') OR r.code_rav LIKE CONCAT('%', :keyword, '%');", nativeQuery = true)
+    List<Ravitaillement> search(@Param("keyword") String keyword);
+
+    @Modifying
+    @Query(value = "DELETE FROM ravitaillement WHERE code_rav = :code", nativeQuery = true)
+    void removeByCode(@Param("code") String code);
+
+
+    @Query(value = "SELECT COUNT(code_rav) AS nbr_rav , MONTH(date_rav) FROM ravitaillement WHERE  date_rav = :year GROUP BY MONTH(date_rav); " , nativeQuery = true)
+     List<RavitaillementDTO2> nbrRavParMois(@Param("year") String year);
+
+
+
+
+
+
+
 }
+

@@ -3,15 +3,8 @@ package com.scierie_application.scierie.ravitaillement;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
- 
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -21,8 +14,9 @@ public class RavitaillementController {
     @Autowired
     public RavitaillementService service ; 
 
-    @PostMapping(value="/create")
-    public RavitaillementDTO1 create(RavitaillementDTO1 r){
+    @PostMapping(value="/create" ,   consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public RavitaillementDTO1 create(@RequestBody RavitaillementDTO1 r){
         return  this.service.create(r);
     }
 
@@ -33,14 +27,14 @@ public class RavitaillementController {
 
 
     @PutMapping("/edit")
-    public RavitaillementDTO1 edit(RavitaillementDTO1 r){
+    public RavitaillementDTO1 edit(@RequestBody RavitaillementDTO1 r){
         return this.service.edit(r);
 
     }
 
-    @DeleteMapping("/delete/{id_rav}")
-    public boolean delete(@PathVariable String id_rav){
-        return this.service.delete(id_rav);
+    @DeleteMapping("/delete/{code_rav}")
+    public boolean delete(@PathVariable String code_rav){
+        return this.service.delete(code_rav);
     }
 
     @GetMapping("/search/{keyword}")
@@ -49,4 +43,8 @@ public class RavitaillementController {
     }
     
 
+    @GetMapping("/dataChart")
+    public List<Integer> getDataChart(){
+        return  this.service.getDataChart() ;
+    }
 }

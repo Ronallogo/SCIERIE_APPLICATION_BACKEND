@@ -22,7 +22,10 @@ public interface FournisseurRepository extends JpaRepository<Fournisseur, Long> 
     )
     List<Fournisseur> search(@Param("keyword") String keyword );
 
+    @Query(value="SELECT nom_fournisseur FROM  fournisseur" , nativeQuery = true)
+    List<String> getAllNameFournisseur();
 
-    @Query(value="select * from fournisseur where nom_fournisseur like  concat('%' , ':nom' , '%') ;" , nativeQuery = true)
-    Optional<Fournisseur> findByNom(@Param("nom") String nom);
+
+    @Query(value="SELECT taxe_abbatage FROM  fournisseur" , nativeQuery = true)
+    List<Float> getAllTaxeFournisseur();
 }
