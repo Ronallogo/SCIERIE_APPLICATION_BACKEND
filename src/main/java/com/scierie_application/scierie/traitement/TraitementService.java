@@ -81,5 +81,22 @@ public class TraitementService {
         return true ;
     }
 
+    public List<TraitementDTO1> search(String keyword){
+        return this.tr.findByKeyword(keyword).stream().map(
+                x->
+                        TraitementDTO1.builder()
+                                .id_traitement(x.getId_traitement())
+                                .bois_a_traiter(x.getBois_a_traiter())
+                                .description(x.getDescription())
+                                .nom_traitement(x.getNom_traitement())
+                                .pourcent_reduction_cubage(x.getPourcent_reduction_cubage())
+                                .pourcent_reduction_diam(x.getPourcent_reduction_diam())
+                                .pourcent_reduction_long(x.getPourcent_reduction_long())
+                                .pourcent_reduction_poids( x.getPourcent_reduction_poids())
+                                .build()
+
+        ).collect( Collectors.toList());
+    }
+
 
 }

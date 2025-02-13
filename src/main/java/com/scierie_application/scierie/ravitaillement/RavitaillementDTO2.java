@@ -14,6 +14,6 @@ import java.util.List;
 @Builder
 @Data
 public class RavitaillementDTO2 {
-    Integer nbr_rav ;
+    Long nbr_rav ;
     Integer month ;
 }

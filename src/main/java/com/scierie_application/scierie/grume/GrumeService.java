@@ -1,7 +1,7 @@
 package com.scierie_application.scierie.grume;
-
+ 
 import java.util.List;
-import java.util.UUID;
+ 
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class GrumeService {
         var e = this.gr.findByCodeLots(g.getCode_grume()).orElseThrow(()-> new GrumeNotFoundException("Grume not found"));
         this.gtr.save(
             GrumeTraiter.builder()
-            .code_grume(e.getCode_rav().getCode_rav())
+            .grume(e)
             .date_traitement(g.getDate_traitement())
 
             .build()
@@ -51,7 +51,7 @@ public class GrumeService {
             x ->
             GrumeTraiterDTO1.builder()
             .id_operation( x.getId_operation())
-            .code_grume( x.getCode_grume())
+            .code_grume(x.getGrume().getCode_rav().getCode_rav())
             .date_traitement( x.getDate_traitement())
             .bois_associe( x.getTraitement().getBois_a_traiter())
             .id_traitement( x.getTraitement().getId_traitement())
@@ -68,30 +68,31 @@ public class GrumeService {
 
     public GrumeDTO1 create(GrumeDTO1 g){
 
-        var e = this.er.findById(g.getId_essence()).orElseThrow(()-> new EssenceNotFoundException("Essence not found"));
+        var e = this.er.findByLibelle(g.getNom_essence()).orElseThrow(()-> new EssenceNotFoundException("Essence not found"));
         var rav = this.r.findByCode(g.getCode_lots()).orElseThrow(()-> new RuntimeException("ravitaillement not found"));
 
- 
-        this.gr.save(
+        Float cubage = (float) (Math.PI * Math.pow((g.getDiam_moy()/ 2) , 2)) * g.getLongueur_moy();
+        var grume =  this.gr.save(
             Grume.builder()
             .diam_moy(g.getDiam_moy())
             .longueur_moy(g.getLongueur_moy())
             .poids_moy(g.getPoids_moy())
             .code_rav(rav)
-            .cubage_moy(g.getCubage_moy())
+            .cubage_moy(cubage)
             .qualite( g.getQualite())
             .quantite(g.getQuantite())
             .essence(e)
-            .localisaton(g.getLocalisaton())
+            .entree(rav.getDate_rav())
+            .poids_lots_grume(g.getQuantite() * g.getPoids_moy())
+
             .build()
         );
-        
+
+        g.setId_grume(grume.getId_grume());
         return g ; 
     }
 
-    public  String generateUUID() {
-        return UUID.randomUUID().toString();
-    }
+
 
     public List<GrumeDTO1> getAllGrume(){
 
@@ -105,7 +106,7 @@ public class GrumeService {
         .entree(x.getEntree())
         .longueur_moy(x.getLongueur_moy())
         .poids_moy(x.getPoids_moy())
-        .localisaton(x.getLocalisaton())
+        .traiter(this.isTraiter(x.getId_grume()))
         .quantite(x.getQuantite())
         .qualite(x.getQualite())
         .id_essence(x.getEssence().getId_essence())
@@ -129,9 +130,11 @@ public class GrumeService {
 
 
     public GrumeDTO1 edit(GrumeDTO1 g){
-        var e = this.er.findById(g.getId_essence()).orElseThrow(()-> new EssenceNotFoundException("Essence not found"));
-        if(!this.gr.existsById(g.getId_grume()))  throw new GrumeNotFoundException("Grume not found!!");
+        var e = this.er.findByLibelle(g.getNom_essence()).orElseThrow(()-> new EssenceNotFoundException("Essence not found"));
         var rav = this.r.findByCode(g.getCode_lots()).orElseThrow(()-> new RuntimeException("ravitaillement not found"));
+
+        Float cubage = (float) (Math.PI * Math.pow((g.getDiam_moy()/ 2) , 2)) * g.getLongueur_moy();
+
         this.gr.save(
             Grume.builder()
             .id_grume(g.getId_grume())
@@ -139,11 +142,12 @@ public class GrumeService {
             .longueur_moy(g.getLongueur_moy())
             .poids_moy(g.getPoids_moy())
             .code_rav(rav)
-            .cubage_moy(g.getCubage_moy())
+            .cubage_moy(cubage)
+            .poids_lots_grume(g.getQuantite() * g.getPoids_moy())
             .qualite( g.getQualite())
             .quantite(g.getQuantite())
             .essence(e)
-            .localisaton(g.getLocalisaton())
+            .entree(rav.getDate_rav())
             .build()
         );
         return g ; 
@@ -161,5 +165,30 @@ public class GrumeService {
         if(!this.gr.existsById(id_grume)) throw new GrumeNotFoundException( "Grume not found");
         this.gr.deleteById(id_grume);
         return true ; 
+    }
+
+    public List<GrumeDTO1> search(String keyword){
+        return this.gr.search(keyword).stream().map(x->
+                GrumeDTO1.builder()
+                        .nom_essence(x.getEssence().getLibelle())
+                        .code_lots(x.getCode_rav().getCode_rav())
+                        .cubage_moy(x.getCubage_moy())
+                        .id_grume( x.getId_grume())
+                        .diam_moy(x.getDiam_moy())
+                        .entree(x.getEntree())
+                        .longueur_moy(x.getLongueur_moy())
+                        .poids_moy(x.getPoids_moy())
+                        .quantite(x.getQuantite())
+                        .qualite(x.getQualite())
+                        .traiter(this.isTraiter(x.getId_grume()))
+                        .id_essence(x.getEssence().getId_essence())
+                        .build()
+        ).collect(Collectors.toList());
+
+    }
+
+    public boolean isTraiter(Long id_grume){
+        List<Long> list =  this.gtr.getAllGrumeTraitsId();
+        return list.contains(id_grume);
     }
 }

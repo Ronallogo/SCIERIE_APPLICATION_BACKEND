@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Transactional
@@ -96,6 +97,29 @@ public class EssenceService {
              
     }
 
+    public  EssenceDTO1 getOne(String essence){
+         var e = this.essenceRepository.findByLibelle(essence).orElseThrow(()-> new EssenceNotFoundException("essence not found"));
+         return EssenceDTO1.builder()
+                 .id_essence(e.getId_essence())
+                 .libelle(e.getLibelle())
+                 .abbreviation(e.getAbbreviation())
+                 .densite(e.getDensite())
+                 .mercuriale(e.getMercuriale())
+                 .teneur_en_eau(e.getTeneur_en_eau())
+                 .build();
+    }
+
+
+    public EssenceDTO1 essenceLaPlusAcheter(){
+        Essence e = this.essenceRepository.essenceLePlusAcheter();
+        return EssenceDTO1.builder()
+                .id_essence(e.getId_essence())
+                .densite(e.getDensite())
+                .teneur_en_eau(e.getTeneur_en_eau())
+                .libelle(e.getLibelle())
+                .abbreviation(e.getAbbreviation())
+                .build();
+    }
 
     
 }

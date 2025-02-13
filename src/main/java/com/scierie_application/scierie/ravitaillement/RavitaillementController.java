@@ -44,7 +44,7 @@ public class RavitaillementController {
     
 
     @GetMapping("/dataChart")
-    public List<Integer> getDataChart(){
+    public  int[] getDataChart(){
         return  this.service.getDataChart() ;
     }
 }

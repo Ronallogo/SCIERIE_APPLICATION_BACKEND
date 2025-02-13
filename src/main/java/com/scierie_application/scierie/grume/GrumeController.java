@@ -68,6 +68,11 @@ public class GrumeController {
         return this.gs.delete(id);
     }
 
+    @GetMapping("/search/{keyword}")
+    public List<GrumeDTO1> search(@PathVariable String keyword){
+        return  this.gs.search(keyword);
+    }
+
     
     
 }

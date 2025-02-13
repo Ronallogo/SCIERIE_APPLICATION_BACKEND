@@ -39,7 +39,7 @@ public class Grume implements Serializable {
     private Long id_grume ;
     @ManyToOne
     private Ravitaillement code_rav ;
-    private String localisaton ;
+
     private Float longueur_moy ;
     private Float diam_moy ;
     private Float poids_moy ;
@@ -49,7 +49,7 @@ public class Grume implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_essence" , nullable = false) 
     private Essence essence ;
-    private Float poids_grume ; 
+    private Float poids_lots_grume ;
     @JsonFormat(shape = JsonFormat.Shape.STRING,
         pattern = "yyyy-MM-dd",
         timezone = "UTC")

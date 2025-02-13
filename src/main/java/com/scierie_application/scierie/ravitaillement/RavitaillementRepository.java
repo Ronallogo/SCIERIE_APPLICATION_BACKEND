@@ -3,7 +3,7 @@ package com.scierie_application.scierie.ravitaillement;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+ 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -28,11 +28,14 @@ public interface RavitaillementRepository  extends JpaRepository<Ravitaillement,
     void removeByCode(@Param("code") String code);
 
 
-    @Query(value = "SELECT COUNT(code_rav) AS nbr_rav , MONTH(date_rav) FROM ravitaillement WHERE  date_rav = :year GROUP BY MONTH(date_rav); " , nativeQuery = true)
+    @Query(value = "SELECT COUNT(month(date_rav)) AS nbr_rav , MONTH(date_rav) AS month FROM ravitaillement r WHERE  YEAR(date_rav) = :year GROUP BY MONTH(date_rav) ORDER BY COUNT(MONTH(r.date_rav)) DESC; " , nativeQuery = true)
      List<RavitaillementDTO2> nbrRavParMois(@Param("year") String year);
 
 
-
+/// //select   count(month(date_rav)) , month(date_rav) from ravitaillement r
+/// where year(date_rav) = '2025'
+///  group by month(date_rav)
+///  order by count(month(r.date_rav)) desc;
 
 
 

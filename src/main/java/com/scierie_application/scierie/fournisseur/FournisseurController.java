@@ -59,6 +59,8 @@ public class FournisseurController {
     public FournisseurDTO2 getDataChart(){
         return  this.fs.dataForChart() ;
     }
+
+
     
     
 

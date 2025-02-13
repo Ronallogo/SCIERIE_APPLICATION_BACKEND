@@ -6,6 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.web.bind.annotation.GetMapping;
  
  
@@ -50,6 +52,17 @@ public class EssenceController {
     public  Float getMethodName() {
         return    this.essenceService.mercurialeMoyenne() ;
     }
-    
+
+
+    @GetMapping("/getOne/{essence}")
+     EssenceDTO1 getOne(@PathVariable String essence){
+        return this.essenceService.getOne(essence);
+    }
+
+
+    @GetMapping("/plusAcheter")
+    public EssenceDTO1 essencePlusAcheter(){
+        return this.essenceService.essenceLaPlusAcheter() ;
+    }
 
 }

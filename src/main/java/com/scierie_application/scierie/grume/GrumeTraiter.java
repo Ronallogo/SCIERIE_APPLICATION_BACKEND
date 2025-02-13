@@ -13,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,7 +34,9 @@ public class GrumeTraiter  implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_operation ; 
-    private String code_grume;
+    @OneToOne
+    @JoinColumn(name ="id_grume")
+    private Grume grume;
     @ManyToOne
     @JoinColumn(name = "id_traitement" , nullable = false)
     private Traitement traitement;

@@ -21,7 +21,7 @@ import lombok.Setter;
 public class GrumeDTO1 {
     private Long id_grume ;
     private String code_lots ;
-    private String localisaton ;
+
     private Float longueur_moy ;
     private Float diam_moy ;
     private Float poids_moy ;
@@ -30,7 +30,8 @@ public class GrumeDTO1 {
     private Integer quantite ; 
     private Long id_essence ;
     private String nom_essence ; 
-    private Float poids_grume ; 
+    private boolean traiter ; 
+
     @JsonFormat(shape = JsonFormat.Shape.STRING,
         pattern = "yyyy-MM-dd",
         timezone = "UTC")

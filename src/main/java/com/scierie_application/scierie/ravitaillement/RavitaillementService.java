@@ -1,10 +1,8 @@
 package com.scierie_application.scierie.ravitaillement;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.spi.LocaleNameProvider;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,25 +116,26 @@ public class RavitaillementService {
 
 
 
-    public List<Integer> getDataChart(){
-        int thisYear = LocalDate.now().getMonthValue() ;
-        List<RavitaillementDTO2> list_rav =resetList( this.rav.nbrRavParMois(String.valueOf(thisYear)));
+    public int[] getDataChart(){
+        int thisYear = LocalDate.now().getYear() ;
+        return  resetList(this.rav.nbrRavParMois(String.valueOf(thisYear)));
 
-        return list_rav.stream()
-                .mapToInt(RavitaillementDTO2::getNbr_rav).boxed().toList();
+
     }
 
 
-    public List<RavitaillementDTO2> resetList(List<RavitaillementDTO2> list){
-        for (int i = 1; i <= 12 ; i++) {
-            if(i != list.get(i).month ){
-                    list.set(i , RavitaillementDTO2.builder()
-                                    .month(i)
-                                    .nbr_rav(0)
-                            .build());
-            }
+    public int[] resetList(List<RavitaillementDTO2> list){
+        int i =  1 ;
+
+        int[] nbr_rav_list = {0,0,0,0,0,0,0,0,0,0,0,0};
+
+
+        for (int j = 0; j < list.size(); j++) {
+            nbr_rav_list[list.get(j).getMonth() - 1  ] = Math.toIntExact(list.get(j).getNbr_rav());
         }
-        return  list ;
+
+
+        return   nbr_rav_list ;
 
     }
 
