@@ -31,5 +31,7 @@ public interface EssenceRepository extends JpaRepository<Essence , Long> {
             "order by  count(e.id_essence) desc limit 1;" , nativeQuery = true)
     Essence essenceLePlusAcheter();
 
+    Boolean existsByLibelle(String libelle);
+
 
 }

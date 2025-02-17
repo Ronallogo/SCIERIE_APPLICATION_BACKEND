@@ -1,9 +1,12 @@
 package com.scierie_application.scierie.grume;
  
+import java.util.ArrayList;
 import java.util.List;
  
 import java.util.stream.Collectors;
 
+import com.scierie_application.scierie.handler.exeption.TraitementNotFoundException;
+import com.scierie_application.scierie.traitement.TraitementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +26,10 @@ public class GrumeService {
     private GrumeRepository gr;
 
     @Autowired
-    private EssenceRepository er ; 
+    private EssenceRepository er ;
+
+    @Autowired
+    private TraitementRepository tr ;
 
     @Autowired
     private GrumeTraiteRepository gtr ; 
@@ -34,12 +40,13 @@ public class GrumeService {
 
     
     public GrumeTraiterDTO1 create_gt(GrumeTraiterDTO1 g){
-        var e = this.gr.findByCodeLots(g.getCode_grume()).orElseThrow(()-> new GrumeNotFoundException("Grume not found"));
+        var grume = this.gr.findByCodeLots(g.getCode_grume()).orElseThrow(()-> new GrumeNotFoundException("Grume not found"));
+        var t  = this.tr.findByNom_traitement(g.getNom_traitement()).orElseThrow(()-> new TraitementNotFoundException("Traitement not found"));
         this.gtr.save(
             GrumeTraiter.builder()
-            .grume(e)
+            .grume(grume)
+            .traitement(t)
             .date_traitement(g.getDate_traitement())
-
             .build()
         );
         return g ;
@@ -191,4 +198,14 @@ public class GrumeService {
         List<Long> list =  this.gtr.getAllGrumeTraitsId();
         return list.contains(id_grume);
     }
+
+    List<Integer> dataNbrGrumeTraiter(String essence){
+        if(!this.er.existsByLibelle(essence))
+            throw new EssenceNotFoundException("Essence not found") ;
+        List<Integer> listData  = new ArrayList<>() ;
+        listData.add(this.gtr.grumeTraiter(essence));
+        listData.add(this.gr.grumeNonTraiter(essence)) ;
+        return listData ;
+    }
+
 }

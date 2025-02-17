@@ -28,6 +28,11 @@ public class TraitementController {
         return this.ts.getAllTraitement();
     }
 
+    @GetMapping("/allByEssence/{essence}")
+    public List<TraitementDTO1> getAllTraitementByEssence(@PathVariable String essence){
+        return this.ts.getAllByEssence(essence);
+    }
+
 
     @PutMapping(value = "/edit", produces = "application/json" , consumes = "application/json")
     public TraitementDTO1 edit(@RequestBody TraitementDTO1 t){

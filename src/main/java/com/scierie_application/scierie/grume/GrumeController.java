@@ -55,6 +55,11 @@ public class GrumeController {
         return  this.gs.dataChartStockEssence();
     }
 
+    @GetMapping(value = "/dataGrumeTraiter/{essence}")
+    public List<Integer> dataNbrGrumeTraiter(@PathVariable String essence) {
+        return  this.gs.dataNbrGrumeTraiter(essence);
+    }
+
     @PutMapping("/edit")
     public GrumeDTO1 putMethodName( @RequestBody GrumeDTO1 entity) {
  
@@ -72,6 +77,8 @@ public class GrumeController {
     public List<GrumeDTO1> search(@PathVariable String keyword){
         return  this.gs.search(keyword);
     }
+
+
 
     
     
