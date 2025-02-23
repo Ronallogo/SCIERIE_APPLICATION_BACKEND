@@ -20,7 +20,7 @@ public class ClientDTO1 {
     private String societe ;
     private String adresse ;
     private String email ;
-    private String fax ;
+    private String fax  ;
  
 
 }
