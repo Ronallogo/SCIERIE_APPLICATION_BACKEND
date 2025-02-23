@@ -1,13 +1,15 @@
 package com.scierie_application.scierie.colis;
 
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.scierie_application.scierie.paiement.Paiement;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.*;
 
-import java.io.Serializable;
 import java.util.Date;
-
 
 @Data
 @AllArgsConstructor
@@ -15,18 +17,13 @@ import java.util.Date;
 @Getter
 @Builder
 @Setter
-@Entity
-@Table(name = "colis")
-public class Colis implements Serializable {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class ColisDTO1 {
     private Long id_colis ;
-    @ManyToOne
-    @JoinColumn(name = "id_paiement" , nullable = false)
-    private Paiement paiement ;
+
+    private Long paiement ;
     @JsonFormat(shape = JsonFormat.Shape.STRING,
             pattern = "yyyy-MM-dd",
             timezone = "UTC")
     private Date date_colis ;
-
-
 }

@@ -2,17 +2,7 @@ package com.scierie_application.scierie.handler;
 
 
 
-import com.scierie_application.scierie.handler.exeption.ContratNotFoundException;
-import com.scierie_application.scierie.handler.exeption.EssenceNotFoundException;
-import com.scierie_application.scierie.handler.exeption.GrumeNotFoundException;
-import com.scierie_application.scierie.handler.exeption.MonnaieNotFoundException;
-import com.scierie_application.scierie.handler.exeption.PaysNotFoundException;
-import com.scierie_application.scierie.handler.exeption.PortNotFoundException;
-import com.scierie_application.scierie.handler.exeption.RavitaillementNotFoundException;
-import com.scierie_application.scierie.handler.exeption.SocieteNotFoundException;
-import com.scierie_application.scierie.handler.exeption.TraitementNotFoundException;
-import com.scierie_application.scierie.handler.exeption.TypePaiementNotFoundException;
-import com.scierie_application.scierie.handler.exeption.VilleNotFoundException;
+import com.scierie_application.scierie.handler.exeption.*;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -93,7 +83,25 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(TypeNotPresentException.class )
     public ResponseEntity<?> handleTypePaiementNotFoundException( TypePaiementNotFoundException ex, WebRequest request) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    } 
+    }
+
+    //////////////////////////////  Exception RavitaillementLowCapacity Handler   //////////////////////////////////////
+    @ExceptionHandler(RavitaillementLowCapacity.class )
+    public ResponseEntity<?> handleRavitaillementLowCapacityException( RavitaillementLowCapacity ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    //////////////////////////////  Exception ClientNotFoundException Handler   //////////////////////////////////////
+    @ExceptionHandler(ClientNotFoundException.class )
+    public ResponseEntity<?> handleClientNotFoundException( ClientNotFoundException ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    //////////////////////////////  Exception  TarifNotFoundException Handler   //////////////////////////////////////
+    @ExceptionHandler( TarifNotFoundException.class )
+    public ResponseEntity<?> handleTarifNotFoundException(  TarifNotFoundException ex, WebRequest request) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 
 
 

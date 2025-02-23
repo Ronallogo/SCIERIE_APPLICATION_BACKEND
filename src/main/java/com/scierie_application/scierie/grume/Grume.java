@@ -53,7 +53,8 @@ public class Grume implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING,
         pattern = "yyyy-MM-dd",
         timezone = "UTC")
-    private Date entree ; 
+    private Date entree ;
+    private boolean traiter ;
 
 
 

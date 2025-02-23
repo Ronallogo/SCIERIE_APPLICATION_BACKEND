@@ -19,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Builder
 @Setter
 @Entity
 @Table(name = "Paiement" )
@@ -41,6 +42,8 @@ public class Paiement implements Serializable {
             pattern = "yyyy-MM-dd",
             timezone = "UTC")
     private Date date_cloture ;
+
+    private String etat_paiement ;
 
 
     @OneToMany(mappedBy = "paiement" , cascade = CascadeType.ALL)

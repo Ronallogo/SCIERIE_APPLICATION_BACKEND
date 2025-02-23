@@ -15,9 +15,7 @@ public interface GrumeTraiteRepository extends JpaRepository<GrumeTraiter,Long>{
     List<Long> getAllGrumeTraitsId(); //
 
 
-    @Query(value = "select count(gt.id_operation) from grumeTraiter gt " +
-            "join grume g on g.id_grume = gt.id_grume " +
-            "join essence e on e.id_essence = g.id_essence" +
-            "  where e.libelle = :essence" , nativeQuery = true)
-    Integer grumeTraiter(@Param("essence") String essence) ;
+
+
+    /// /select sum(g.quantite) from grume g join essence e on e.id_essence = g.id_essence join grume_traiter gt on gt.id_grume = g.id_grume where e.libelle = 'Ebene rouge';
 }

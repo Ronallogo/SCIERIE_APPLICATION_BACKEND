@@ -44,6 +44,7 @@ public class RavitaillementService {
                         .fournisseur(f)
                         .effectuer(r.getEffectuer())
                         .qtBois(r.getQtBois())
+                        .capacite(0)
                         .build()
 
         );
@@ -126,7 +127,6 @@ public class RavitaillementService {
 
     public int[] resetList(List<RavitaillementDTO2> list){
         int i =  1 ;
-
         int[] nbr_rav_list = {0,0,0,0,0,0,0,0,0,0,0,0};
 
 

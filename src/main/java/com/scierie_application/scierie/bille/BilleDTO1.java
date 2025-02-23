@@ -1,10 +1,9 @@
 package com.scierie_application.scierie.bille;
 
-import java.io.Serializable;
-
 import com.scierie_application.scierie.colis.Colis;
 import com.scierie_application.scierie.grume.Grume;
-import jakarta.persistence.*;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 
@@ -14,12 +13,8 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "bille")
 
-public class Bille implements Serializable{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class BilleDTO1 {
     private Long id_bille ;
     private String codeLot ;
     private Float long_moy ;
@@ -28,12 +23,8 @@ public class Bille implements Serializable{
     private Integer quantite ;
     private Float poids_moyen ;
     private Float poids_lots ;
-    @ManyToOne
-    @JoinColumn(name = "id_grume")
-    private Grume grume ;
-    @ManyToOne
-    @JoinColumn(name = "id_colis")
-    private Colis colis ;
 
+    private String grume ;
 
+    private String colis ;
 }

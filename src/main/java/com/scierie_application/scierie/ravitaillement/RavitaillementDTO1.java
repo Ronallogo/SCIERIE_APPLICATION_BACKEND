@@ -25,4 +25,5 @@ public class RavitaillementDTO1 {
     private Float prix_rav ; 
     private Boolean effectuer ;
     private Integer qtBois ;
+    private Integer capacite ;
 }

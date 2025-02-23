@@ -30,8 +30,7 @@ public class Tarif implements Serializable {
     private Float diam_moy ;
     private Float long_moy ;
     private Float montant_unitaire ;
-   /* @OneToMany(mappedBy = "tarif" , cascade = CascadeType.ALL)
-    private List<Fournisseur> fournisseurs ;*/
+
     @OneToMany(mappedBy = "tarif" , cascade = CascadeType.ALL)
     private List<Paiement> paiements ;
 

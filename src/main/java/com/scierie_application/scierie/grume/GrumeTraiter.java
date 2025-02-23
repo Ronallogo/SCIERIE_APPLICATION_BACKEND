@@ -44,4 +44,8 @@ public class GrumeTraiter  implements Serializable{
             pattern = "yyyy-MM-dd",
             timezone = "UTC")
     private Date date_traitement;
+    private Float cubageApresTraitement ;
+    private Float LongApresTraitement ;
+    private Float diamApresTraitement ;
+    private Float poidsApresTraitement ;
 }
