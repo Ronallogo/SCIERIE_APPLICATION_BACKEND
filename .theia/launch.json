@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ScierieApplication<scierie>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.scierie_application.scierie.ScierieApplication",
+            "projectName": "scierie",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
